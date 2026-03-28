@@ -32,7 +32,10 @@ import 'package:equatable/equatable.dart';
 // ---------------------------------------------------------------------------
 
 final di = _MockDI();
-class _MockDI { T call<T>() => throw UnimplementedError(); }
+
+class _MockDI {
+  T call<T>() => throw UnimplementedError();
+}
 
 // Mock BLoCs
 class FetchUserDataState extends Equatable {
@@ -56,6 +59,7 @@ class FetchUserDataState extends Equatable {
 }
 
 class FetchUserDataEvent {}
+
 class FetchUserDataBloc extends Bloc<FetchUserDataEvent, FetchUserDataState> {
   FetchUserDataBloc() : super(const FetchUserDataState());
 }
@@ -69,6 +73,7 @@ class LayoutState extends Equatable {
 }
 
 class LayoutEvent {}
+
 class LayoutBloc extends Bloc<LayoutEvent, LayoutState> {
   LayoutBloc() : super(const LayoutState());
 }
@@ -108,14 +113,24 @@ class HomeState extends Equatable {
 
   @override
   List<Object?> get props => [
-        currentTabIndex, popularRooms, liveRooms, followRooms,
-        friendsRooms, lastCreateRooms, filteredRooms, globalRooms,
-        popularCurrentPage, liveCurrentPage, globalCurrentPage,
-        followCurrentPage, friendsCurrentPage,
+        currentTabIndex,
+        popularRooms,
+        liveRooms,
+        followRooms,
+        friendsRooms,
+        lastCreateRooms,
+        filteredRooms,
+        globalRooms,
+        popularCurrentPage,
+        liveCurrentPage,
+        globalCurrentPage,
+        followCurrentPage,
+        friendsCurrentPage,
       ];
 }
 
 class HomeEvent {}
+
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeState());
 }
@@ -123,54 +138,103 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 // Mock pages
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
+
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
+
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
+
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
+
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
+
 class RoomPage extends StatelessWidget {
   const RoomPage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
+
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
+
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
+
 class ReelsPage extends StatelessWidget {
   const ReelsPage({super.key});
-  @override Widget build(BuildContext context) => const Placeholder();
+  @override
+  Widget build(BuildContext context) => const Placeholder();
 }
-class SplashBloc extends Bloc<dynamic, dynamic> { SplashBloc() : super(null); }
-class ConfigAppBloc extends Bloc<dynamic, dynamic> { ConfigAppBloc() : super(null); }
-class ColorsBloc extends Bloc<dynamic, dynamic> { ColorsBloc() : super(null); }
-class LoginBloc extends Bloc<dynamic, dynamic> { LoginBloc() : super(null); }
-class RegisterBloc extends Bloc<dynamic, dynamic> { RegisterBloc() : super(null); }
-class SearchBloc extends Bloc<dynamic, dynamic> { SearchBloc() : super(null); }
-class ReelsBloc extends Bloc<dynamic, dynamic> { ReelsBloc() : super(null); }
-class ChatBloc extends Bloc<dynamic, dynamic> { ChatBloc() : super(null); }
-class RoomBloc extends Bloc<dynamic, dynamic> { RoomBloc() : super(null); }
-class ProfileBloc extends Bloc<dynamic, dynamic> { ProfileBloc() : super(null); }
+
+class SplashBloc extends Bloc<dynamic, dynamic> {
+  SplashBloc() : super(null);
+}
+
+class ConfigAppBloc extends Bloc<dynamic, dynamic> {
+  ConfigAppBloc() : super(null);
+}
+
+class ColorsBloc extends Bloc<dynamic, dynamic> {
+  ColorsBloc() : super(null);
+}
+
+class LoginBloc extends Bloc<dynamic, dynamic> {
+  LoginBloc() : super(null);
+}
+
+class RegisterBloc extends Bloc<dynamic, dynamic> {
+  RegisterBloc() : super(null);
+}
+
+class SearchBloc extends Bloc<dynamic, dynamic> {
+  SearchBloc() : super(null);
+}
+
+class ReelsBloc extends Bloc<dynamic, dynamic> {
+  ReelsBloc() : super(null);
+}
+
+class ChatBloc extends Bloc<dynamic, dynamic> {
+  ChatBloc() : super(null);
+}
+
+class RoomBloc extends Bloc<dynamic, dynamic> {
+  RoomBloc() : super(null);
+}
+
+class ProfileBloc extends Bloc<dynamic, dynamic> {
+  ProfileBloc() : super(null);
+}
 
 // Mock SVGA widget (heavy animation renderer)
 class ShowSVGA extends StatelessWidget {
@@ -409,7 +473,8 @@ class MainLayout extends StatelessWidget {
                   ),
                   ListView.builder(
                     itemCount: state.followRooms.length,
-                    itemBuilder: (_, i) => ListTile(title: Text('Following $i')),
+                    itemBuilder: (_, i) =>
+                        ListTile(title: Text('Following $i')),
                   ),
                   ListView.builder(
                     itemCount: state.friendsRooms.length,

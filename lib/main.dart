@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_developer_assessment/presentation/pages/room_list_page.dart';
 
 void main() {
   runApp(const AssessmentApp());
@@ -15,7 +16,7 @@ class AssessmentApp extends StatelessWidget {
         colorSchemeSeed: const Color(0xFF32e5ac),
         useMaterial3: true,
       ),
-      home: const AssessmentHomePage(),
+      home: const RoomListPage(),
     );
   }
 }
@@ -35,9 +36,11 @@ class AssessmentHomePage extends StatelessWidget {
             children: [
               Icon(Icons.code, size: 64, color: Color(0xFF32e5ac)),
               SizedBox(height: 16),
-              Text('UTD Software', style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
+              Text('UTD Software',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
               SizedBox(height: 8),
-              Text('Flutter Developer Assessment', style: TextStyle(fontSize: 18, color: Colors.grey)),
+              Text('Flutter Developer Assessment',
+                  style: TextStyle(fontSize: 18, color: Colors.grey)),
               SizedBox(height: 32),
               Text(
                 'See the exercises/ directory for your tasks.\nOpen questionnaire/index.html in a browser\nto complete the questionnaire.',

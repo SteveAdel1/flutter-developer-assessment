@@ -5,7 +5,7 @@
 //
 // SCENARIO:
 // You're building a social/live-streaming app. The home screen shows a list
-// of active rooms. Each room is displayed as a card with the room's cover image,
+// of active room. Each room is displayed as a card with the room's cover image,
 // name, intro text, visitor count, country flag, and status icons.
 //
 // The previous developer left a broken implementation. Your job is to fix it
@@ -88,7 +88,8 @@ final sampleRooms = [
   RoomEntity(
     id: 3,
     roomName: 'Gaming Arena - Competitive Matches Every Hour - Join Now!',
-    roomIntro: 'Competitive gaming room with hourly tournaments and prizes for top players',
+    roomIntro:
+        'Competitive gaming room with hourly tournaments and prizes for top players',
     coverUrl: 'https://picsum.photos/200/201',
     visitorsCount: 56789,
     countryFlag: null, // No country
@@ -118,7 +119,7 @@ class RoomCard extends StatelessWidget {
   final RoomEntity room;
 
   // BUG: Missing const constructor
-  RoomCard({required this.room});
+  const RoomCard({required this.room});
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +208,8 @@ class RoomCard extends StatelessWidget {
               Row(
                 children: [
                   // BUG: Will show "null" text if no country flag
-                  Text(room.countryFlag.toString(), style: TextStyle(fontSize: 16)),
+                  Text(room.countryFlag.toString(),
+                      style: TextStyle(fontSize: 16)),
                   // BUG: No spacing
                   if (room.hasPassword)
                     Icon(Icons.lock, size: 14, color: Color(0xFF32e5ac)),
@@ -225,7 +227,7 @@ class _VisitorCount extends StatelessWidget {
   final int count;
 
   // BUG: Missing const, missing key
-  _VisitorCount({required this.count});
+  const _VisitorCount({required this.count});
 
   @override
   Widget build(BuildContext context) {

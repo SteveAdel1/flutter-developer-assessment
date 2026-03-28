@@ -48,72 +48,241 @@ final di = _GetIt.instance;
 // ---------------------------------------------------------------------------
 
 class DioFactory {}
+
 class HiveManager {}
+
 class SharedPreferences {}
 
 // Data Sources
-class HomeRemoteDataSource { HomeRemoteDataSource(DioFactory dio); }
-class MessagesRemoteDataSource { MessagesRemoteDataSource(DioFactory dio); }
-class ProfileRemoteDataSource { ProfileRemoteDataSource(DioFactory dio); }
-class PusherRemoteDataSource { PusherRemoteDataSource(dynamic pusher); }
+class HomeRemoteDataSource {
+  HomeRemoteDataSource(DioFactory dio);
+}
+
+class MessagesRemoteDataSource {
+  MessagesRemoteDataSource(DioFactory dio);
+}
+
+class ProfileRemoteDataSource {
+  ProfileRemoteDataSource(DioFactory dio);
+}
+
+class PusherRemoteDataSource {
+  PusherRemoteDataSource(dynamic pusher);
+}
 
 // Repositories
-class HomeRepository { HomeRepository(HomeRemoteDataSource ds); }
-class MessagesRepository { MessagesRepository(MessagesRemoteDataSource ds); }
-class ProfileRepository { ProfileRepository(ProfileRemoteDataSource ds); }
-class PusherRepository { PusherRepository(PusherRemoteDataSource ds); }
+class HomeRepository {
+  HomeRepository(HomeRemoteDataSource ds);
+}
+
+class MessagesRepository {
+  MessagesRepository(MessagesRemoteDataSource ds);
+}
+
+class ProfileRepository {
+  ProfileRepository(ProfileRemoteDataSource ds);
+}
+
+class PusherRepository {
+  PusherRepository(PusherRemoteDataSource ds);
+}
 
 // Use Cases (each takes a repository)
-class FetchRoomsUC { FetchRoomsUC(HomeRepository repo); }
-class FetchLiveRoomsUC { FetchLiveRoomsUC(HomeRepository repo); }
-class CreateRoomUC { CreateRoomUC(HomeRepository repo); }
-class FetchMessagesUC { FetchMessagesUC(MessagesRepository repo); }
-class SendMessageUC { SendMessageUC(MessagesRepository repo); }
-class DeleteMessageUC { DeleteMessageUC(MessagesRepository repo); }
-class FetchUserProfileUC { FetchUserProfileUC(ProfileRepository repo); }
-class FetchMyProfileUC { FetchMyProfileUC(ProfileRepository repo); }
-class UpdateProfileUC { UpdateProfileUC(ProfileRepository repo); }
-class FetchGiftHistoryUC { FetchGiftHistoryUC(ProfileRepository repo); }
-class FetchUserBadgesUC { FetchUserBadgesUC(ProfileRepository repo); }
-class FetchMyBadgesUC { FetchMyBadgesUC(ProfileRepository repo); }
-class FetchCpProfileUC { FetchCpProfileUC(ProfileRepository repo); }
-class FetchUserRoomsUC { FetchUserRoomsUC(ProfileRepository repo); }
-class FetchSupporterUC { FetchSupporterUC(ProfileRepository repo); }
-class FetchUserIntroUC { FetchUserIntroUC(ProfileRepository repo); }
-class FetchReelsUC { FetchReelsUC(HomeRepository repo); }
-class LikeReelUC { LikeReelUC(HomeRepository repo); }
-class ShareReelUC { ShareReelUC(HomeRepository repo); }
-class ViewReelUC { ViewReelUC(HomeRepository repo); }
-class FetchMomentsUC { FetchMomentsUC(HomeRepository repo); }
-class InitPusherUC { InitPusherUC(PusherRepository repo); }
-class SubscribeChatUC { SubscribeChatUC(PusherRepository repo); }
-class SubscribeMessagesUC { SubscribeMessagesUC(PusherRepository repo); }
-class ListenToBannersUC { ListenToBannersUC(PusherRepository repo); }
-class ListenToGamesUC { ListenToGamesUC(PusherRepository repo); }
-class SubscribeCounterUC { SubscribeCounterUC(PusherRepository repo); }
-class FetchConfigUC { FetchConfigUC(HomeRepository repo); }
-class FetchCountriesUC { FetchCountriesUC(HomeRepository repo); }
-class UpdateFCMTokenUC { UpdateFCMTokenUC(ProfileRepository repo); }
-class FetchLevelDataUC { FetchLevelDataUC(ProfileRepository repo); }
-class InitAnalyticsUC { InitAnalyticsUC(HomeRepository repo); }
-class FetchWalletUC { FetchWalletUC(ProfileRepository repo); }
+class FetchRoomsUC {
+  FetchRoomsUC(HomeRepository repo);
+}
+
+class FetchLiveRoomsUC {
+  FetchLiveRoomsUC(HomeRepository repo);
+}
+
+class CreateRoomUC {
+  CreateRoomUC(HomeRepository repo);
+}
+
+class FetchMessagesUC {
+  FetchMessagesUC(MessagesRepository repo);
+}
+
+class SendMessageUC {
+  SendMessageUC(MessagesRepository repo);
+}
+
+class DeleteMessageUC {
+  DeleteMessageUC(MessagesRepository repo);
+}
+
+class FetchUserProfileUC {
+  FetchUserProfileUC(ProfileRepository repo);
+}
+
+class FetchMyProfileUC {
+  FetchMyProfileUC(ProfileRepository repo);
+}
+
+class UpdateProfileUC {
+  UpdateProfileUC(ProfileRepository repo);
+}
+
+class FetchGiftHistoryUC {
+  FetchGiftHistoryUC(ProfileRepository repo);
+}
+
+class FetchUserBadgesUC {
+  FetchUserBadgesUC(ProfileRepository repo);
+}
+
+class FetchMyBadgesUC {
+  FetchMyBadgesUC(ProfileRepository repo);
+}
+
+class FetchCpProfileUC {
+  FetchCpProfileUC(ProfileRepository repo);
+}
+
+class FetchUserRoomsUC {
+  FetchUserRoomsUC(ProfileRepository repo);
+}
+
+class FetchSupporterUC {
+  FetchSupporterUC(ProfileRepository repo);
+}
+
+class FetchUserIntroUC {
+  FetchUserIntroUC(ProfileRepository repo);
+}
+
+class FetchReelsUC {
+  FetchReelsUC(HomeRepository repo);
+}
+
+class LikeReelUC {
+  LikeReelUC(HomeRepository repo);
+}
+
+class ShareReelUC {
+  ShareReelUC(HomeRepository repo);
+}
+
+class ViewReelUC {
+  ViewReelUC(HomeRepository repo);
+}
+
+class FetchMomentsUC {
+  FetchMomentsUC(HomeRepository repo);
+}
+
+class InitPusherUC {
+  InitPusherUC(PusherRepository repo);
+}
+
+class SubscribeChatUC {
+  SubscribeChatUC(PusherRepository repo);
+}
+
+class SubscribeMessagesUC {
+  SubscribeMessagesUC(PusherRepository repo);
+}
+
+class ListenToBannersUC {
+  ListenToBannersUC(PusherRepository repo);
+}
+
+class ListenToGamesUC {
+  ListenToGamesUC(PusherRepository repo);
+}
+
+class SubscribeCounterUC {
+  SubscribeCounterUC(PusherRepository repo);
+}
+
+class FetchConfigUC {
+  FetchConfigUC(HomeRepository repo);
+}
+
+class FetchCountriesUC {
+  FetchCountriesUC(HomeRepository repo);
+}
+
+class UpdateFCMTokenUC {
+  UpdateFCMTokenUC(ProfileRepository repo);
+}
+
+class FetchLevelDataUC {
+  FetchLevelDataUC(ProfileRepository repo);
+}
+
+class InitAnalyticsUC {
+  InitAnalyticsUC(HomeRepository repo);
+}
+
+class FetchWalletUC {
+  FetchWalletUC(ProfileRepository repo);
+}
 
 // BLoCs
-class HomeBloc { HomeBloc(FetchRoomsUC uc1, FetchLiveRoomsUC uc2); }
-class CreateRoomBloc { CreateRoomBloc(CreateRoomUC uc); }
-class MessagesBloc { MessagesBloc(FetchMessagesUC uc, SendMessageUC uc2); }
-class DeleteMessageBloc { DeleteMessageBloc(DeleteMessageUC uc); }
-class GiftHistoryBloc { GiftHistoryBloc({required FetchGiftHistoryUC giftHistoryUseCase}); }
-class GetBadgesBloc { GetBadgesBloc({required FetchUserBadgesUC getBadgesUseCase, required FetchMyBadgesUC getMyAllBadgeUC}); }
-class UserBadgesBloc { UserBadgesBloc({required FetchUserBadgesUC uc}); }
-class GetUserBadgesBloc { GetUserBadgesBloc({required FetchUserBadgesUC uc}); }
-class CpProfileBloc { CpProfileBloc({required FetchCpProfileUC uc}); }
-class GetUserRoomsBloc { GetUserRoomsBloc({required FetchUserRoomsUC uc}); }
-class GetSupporterBloc { GetSupporterBloc({required FetchSupporterUC uc}); }
-class GetUserIntroBloc { GetUserIntroBloc({required FetchUserIntroUC uc}); }
-class GetReelsBloc { GetReelsBloc(FetchReelsUC uc1, LikeReelUC uc2, ShareReelUC uc3, ViewReelUC uc4); }
-class ReelViewerBloc { ReelViewerBloc(ViewReelUC uc); }
-class MomentBloc { MomentBloc(FetchMomentsUC uc); }
+class HomeBloc {
+  HomeBloc(FetchRoomsUC uc1, FetchLiveRoomsUC uc2);
+}
+
+class CreateRoomBloc {
+  CreateRoomBloc(CreateRoomUC uc);
+}
+
+class MessagesBloc {
+  MessagesBloc(FetchMessagesUC uc, SendMessageUC uc2);
+}
+
+class DeleteMessageBloc {
+  DeleteMessageBloc(DeleteMessageUC uc);
+}
+
+class GiftHistoryBloc {
+  GiftHistoryBloc({required FetchGiftHistoryUC giftHistoryUseCase});
+}
+
+class GetBadgesBloc {
+  GetBadgesBloc(
+      {required FetchUserBadgesUC getBadgesUseCase,
+      required FetchMyBadgesUC getMyAllBadgeUC});
+}
+
+class UserBadgesBloc {
+  UserBadgesBloc({required FetchUserBadgesUC uc});
+}
+
+class GetUserBadgesBloc {
+  GetUserBadgesBloc({required FetchUserBadgesUC uc});
+}
+
+class CpProfileBloc {
+  CpProfileBloc({required FetchCpProfileUC uc});
+}
+
+class GetUserRoomsBloc {
+  GetUserRoomsBloc({required FetchUserRoomsUC uc});
+}
+
+class GetSupporterBloc {
+  GetSupporterBloc({required FetchSupporterUC uc});
+}
+
+class GetUserIntroBloc {
+  GetUserIntroBloc({required FetchUserIntroUC uc});
+}
+
+class GetReelsBloc {
+  GetReelsBloc(
+      FetchReelsUC uc1, LikeReelUC uc2, ShareReelUC uc3, ViewReelUC uc4);
+}
+
+class ReelViewerBloc {
+  ReelViewerBloc(ViewReelUC uc);
+}
+
+class MomentBloc {
+  MomentBloc(FetchMomentsUC uc);
+}
 
 // The God-Class BLoC
 class FetchUserDataBloc {
@@ -352,10 +521,26 @@ class DependencyInjectionService {
     // Also registered as factory!
     di.registerFactory(
       () => FetchUserDataBloc(
-        di(), di(), di(), di(), di(),
-        di(), di(), di(), di(), di(),
-        di(), di(), di(), di(), di(),
-        di(), di(), di(), di(), di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
+        di(),
         di(),
       ),
       instanceName: 'registerFactory',
