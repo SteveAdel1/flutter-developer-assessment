@@ -6,27 +6,27 @@ class RoomCubit extends Cubit<RoomState> {
 
   String roomMode = 'normal';
   bool isCommentLocked = false;
-  List<String> messages = [];
+  final List<String> messages = [];
   int seatCount = 8;
 
   void updateMode(String mode) {
     roomMode = mode;
-    //  emit يعكس البيانات الحالية بدل ما يمسح القديم
+    isCommentLocked = (mode == 'locked');
+
     emit(RoomLoaded(
       roomMode: roomMode,
       isCommentLocked: isCommentLocked,
-      messages: messages,
+      messages: List.unmodifiable(messages),
       seatCount: seatCount,
     ));
   }
 
   void addMessage(String msg) {
     messages.add(msg);
-    //  كنا بنمسح الرسائل القديمة، دلوقتي بنضيف عليهم
     emit(RoomLoaded(
       roomMode: roomMode,
       isCommentLocked: isCommentLocked,
-      messages: messages,
+      messages: List.unmodifiable(messages),
       seatCount: seatCount,
     ));
   }

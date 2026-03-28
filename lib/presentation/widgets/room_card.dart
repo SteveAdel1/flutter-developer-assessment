@@ -14,8 +14,7 @@ class RoomCard extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => RoomScreenMini(
-              roomId: room.id, // تمرير الـ ID للغرفة
-              isLocked: false, // تمرير حالة القفل لو موجودة
+              roomId: room.id,
             ),
           ),
         );

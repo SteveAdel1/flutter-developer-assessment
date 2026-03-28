@@ -11,12 +11,10 @@ class RoomListCubit extends Cubit<RoomListState> {
 
   RoomListCubit(this._fetchRoomsUC) : super(RoomListInitial());
 
-  // FIX  Typed room list properly (was dynamic)
-  // مكنش ليهاtype
   List<RoomEntity> rooms = [];
-
   int currentPage = 1;
   int lastPage = 1;
+  bool _isLoadingMore = false;
 
   // FIX Single ScrollController for all states
   //قبل كده، كل state كان عنده scrollController جديد، وده كان بيخلي القائمة تضيع مكانها عند إعادة تحميل البيانات
@@ -24,8 +22,6 @@ class RoomListCubit extends Cubit<RoomListState> {
 
   void setupScrollListener({required BuildContext context}) {
     scrollController.addListener(() {
-      // FIX Prevent loadMore if we reached lastPage
-      //لو currentPage وصلت لآخر صفحة، أي محاولة لتحميل صفحة جديدة هتسبب request فاضية أو error
       if (scrollController.position.pixels >=
               scrollController.position.maxScrollExtent &&
           currentPage < lastPage) {
@@ -35,20 +31,23 @@ class RoomListCubit extends Cubit<RoomListState> {
   }
 
   Future<void> fetchRooms() async {
+    if (state is RoomListLoading) return;
+
     emit(RoomListLoading());
     currentPage = 1;
 
     final result = await _fetchRoomsUC(RoomParams(page: currentPage));
 
     result.fold(
-      (error) => emit(RoomListError(NetworkExceptions.getErrorMessage(error))),
+      (error) {
+        if (error is NoInternetConnection) {
+          emit(RoomListOffline());
+        } else {
+          emit(RoomListError(NetworkExceptions.getErrorMessage(error)));
+        }
+      },
       (response) {
-        // FIX  Clear old room and cast properly
-        //لما نعمل refresh للبيانات، كنا بنضيف الداتا الجديدة على القديمة بدون مسح القديم، وكنا ممكن نسيب النوع
-        rooms = (response.data ?? []).map((e) => e).toList();
-
-        // FIX Set lastPage safely
-        // لو حاجة رجعت null فى الpagination info
+        rooms = (response.data ?? []).toList();
         lastPage = response.paginates?.lastPage ?? currentPage;
 
         if (rooms.isEmpty) {
@@ -66,31 +65,42 @@ class RoomListCubit extends Cubit<RoomListState> {
   }
 
   Future<void> loadMoreRooms({required BuildContext context}) async {
-    if (currentPage >= lastPage) return;
+    final nextPage = currentPage + 1;
+    if (_isLoadingMore || nextPage > lastPage) return;
 
-    currentPage++;
-    final result = await _fetchRoomsUC(RoomParams(page: currentPage));
+    _isLoadingMore = true;
+    final result = await _fetchRoomsUC(RoomParams(page: nextPage));
 
-    result.fold(
-      (error) {
-        // لا تمسح الـ room، فقط اعرض رسالة
-        final message = NetworkExceptions.getErrorMessage(error);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message)),
-        );
-      },
-      (response) {
-        final newRooms = response.data ?? [];
-        rooms.addAll(newRooms);
-        lastPage = response.paginates?.lastPage ?? lastPage;
+    try {
+      result.fold(
+        (error) {
+          final message = NetworkExceptions.getErrorMessage(error);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(message)),
+          );
+        },
+        (response) {
+          final newRooms = response.data ?? [];
+          rooms.addAll(newRooms);
+          currentPage = nextPage;
+          lastPage = response.paginates?.lastPage ?? lastPage;
 
-        emit(RoomListLoaded(
-          rooms: rooms,
-          currentPage: currentPage,
-          lastPage: lastPage,
-          scrollController: scrollController,
-        ));
-      },
-    );
+          emit(RoomListLoaded(
+            rooms: rooms,
+            currentPage: currentPage,
+            lastPage: lastPage,
+            scrollController: scrollController,
+          ));
+        },
+      );
+    } finally {
+      _isLoadingMore = false;
+    }
+  }
+
+  @override
+  Future<void> close() {
+    scrollController.dispose();
+    return super.close();
   }
 }

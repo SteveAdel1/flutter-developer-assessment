@@ -21,7 +21,6 @@
 // =============================================================================
 
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -155,7 +154,8 @@ class RoomScreenMini extends StatefulWidget {
   final bool isLocked;
 
   // ignore: missing const constructor for now
-  RoomScreenMini({required this.roomId, this.isLocked = false});
+  const RoomScreenMini(
+      {super.key, required this.roomId, this.isLocked = false});
 
   @override
   State<RoomScreenMini> createState() => _RoomScreenMiniState();
@@ -167,7 +167,6 @@ class _RoomScreenMiniState extends State<RoomScreenMini>
   // BUG #7: Static mutable map used as instance state
   // ═══════════════════════════════════════════════════════════════════════════
   static Map<String, GlobalKey> seatKeys = {};
-  static Map<int, String> seatUserIds = {};
 
   final RoomBloc _roomBloc = RoomBloc();
   final BannerBloc _bannerBloc = BannerBloc();
@@ -394,7 +393,7 @@ class _RoomScreenMiniState extends State<RoomScreenMini>
               bloc: _roomBloc,
               // Missing buildWhen
               builder: (context, state) {
-                return Container(
+                return SizedBox(
                   height: 300,
                   child: ListView.separated(
                     controller: _chatScrollController,

@@ -1,10 +1,30 @@
-abstract class BannerState {}
+import 'package:equatable/equatable.dart';
 
-class BannerInitial extends BannerState {}
+abstract class BannerState extends Equatable {
+  const BannerState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class BannerInitial extends BannerState {
+  const BannerInitial();
+
+  @override
+  List<Object?> get props => [];
+}
 
 class BannerVisible extends BannerState {
   final String text;
-  BannerVisible(this.text);
+  const BannerVisible(this.text);
+
+  @override
+  List<Object?> get props => [text];
 }
 
-class BannerHidden extends BannerState {}
+class BannerHidden extends BannerState {
+  const BannerHidden();
+
+  @override
+  List<Object?> get props => [];
+}

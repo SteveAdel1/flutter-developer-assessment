@@ -21,6 +21,8 @@ class AssessmentApp extends StatelessWidget {
   }
 }
 
+/// This widget exists only as an example/reference for assessors.
+/// It is intentionally not wired into the app as [RoomListPage] is the actual home.
 class AssessmentHomePage extends StatelessWidget {
   const AssessmentHomePage({super.key});
 

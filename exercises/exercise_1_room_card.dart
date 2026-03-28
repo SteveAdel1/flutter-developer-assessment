@@ -5,7 +5,7 @@
 //
 // SCENARIO:
 // You're building a social/live-streaming app. The home screen shows a list
-// of active room. Each room is displayed as a card with the room's cover image,
+// of active rooms. Each room is displayed as a card with the room's cover image,
 // name, intro text, visitor count, country flag, and status icons.
 //
 // The previous developer left a broken implementation. Your job is to fix it
@@ -103,13 +103,20 @@ final sampleRooms = [
 // ---------------------------------------------------------------------------
 
 class RoomCardList extends StatelessWidget {
+  const RoomCardList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Rooms')),
       body: ListView(
         // BUG: Should use ListView.builder for performance
-        children: sampleRooms.map((room) => RoomCard(room: room)).toList(),
+        children: sampleRooms
+            .map((room) => RoomCard(
+                  key: ValueKey(room.id),
+                  room: room,
+                ))
+            .toList(),
       ),
     );
   }
@@ -119,7 +126,7 @@ class RoomCard extends StatelessWidget {
   final RoomEntity room;
 
   // BUG: Missing const constructor
-  const RoomCard({required this.room});
+  const RoomCard({super.key, required this.room});
 
   @override
   Widget build(BuildContext context) {

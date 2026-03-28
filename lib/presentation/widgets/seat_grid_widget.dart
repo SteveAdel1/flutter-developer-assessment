@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class SeatGrid extends StatelessWidget {
@@ -6,6 +8,7 @@ class SeatGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final finalCount = max(0, seatCount);
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
         (context, index) => Container(
@@ -17,14 +20,14 @@ class SeatGrid extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.person, color: Colors.grey),
-                SizedBox(height: 4),
-                Text('Seat ${index + 1}', style: TextStyle(fontSize: 10)),
+                const Icon(Icons.person, color: Colors.grey),
+                const SizedBox(height: 4),
+                Text('Seat ${index + 1}', style: const TextStyle(fontSize: 10)),
               ],
             ),
           ),
         ),
-        childCount: seatCount,
+        childCount: finalCount,
       ),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
@@ -33,5 +36,4 @@ class SeatGrid extends StatelessWidget {
       ),
     );
   }
-// شيلنا shrinkWrap و NeverScrollablePhysics لتحسين الأداء داخل CustomScrollView
 }

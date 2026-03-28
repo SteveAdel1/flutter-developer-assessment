@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 class VisitorCount extends StatelessWidget {
   final int count;
   const VisitorCount({super.key, required this.count});
+
   String formatVisitors(int count) {
+    if (count >= 1000000000) {
+      return '${(count / 1000000000).toStringAsFixed(1)}B';
+    }
+    if (count >= 1000000) {
+      return '${(count / 1000000).toStringAsFixed(1)}M';
+    }
     if (count >= 1000) {
       return '${(count / 1000).toStringAsFixed(1)}K';
     }

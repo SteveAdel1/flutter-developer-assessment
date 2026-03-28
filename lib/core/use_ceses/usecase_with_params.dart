@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import '../erros/network_exceptions.dart';
 
@@ -12,7 +15,14 @@ ResultFuture<T> execute<T>(Future<T> Function() fun) async {
   try {
     final result = await fun();
     return Right(result);
-  } catch (_) {
+  } on TimeoutException {
+    return const Left(RequestTimeout());
+  } on SocketException {
+    return const Left(NoInternetConnection());
+  } on FormatException {
+    return const Left(BadRequest('Invalid format'));
+  } catch (e) {
+    // Ideally we log the error here
     return const Left(ServerError());
   }
 }

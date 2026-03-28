@@ -1,12 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/banner/banner_cubit.dart';
 import '../cubit/room/room_cubit.dart';
 import '../cubit/room/room_states.dart';
 import '../widgets/chat_list_widget.dart';
-import '../widgets/room_banner_widget.dart';
 import '../widgets/seat_grid_widget.dart';
 
 class RoomScreenMini extends StatefulWidget {
@@ -31,7 +29,9 @@ class _RoomScreenMiniState extends State<RoomScreenMini>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    //  الاشتراك في ستريم الرسائل دلوقتي فعلي وبيضيف رسائل
+    // Seed the initial state from widget.isLocked
+    _roomCubit.updateMode(widget.isLocked ? 'locked' : 'normal');
+
     _subscriptions.add(
       Stream.periodic(const Duration(seconds: 3), (i) => 'Hello $i')
           .listen((msg) => _roomCubit.addMessage(msg)),
@@ -41,7 +41,6 @@ class _RoomScreenMiniState extends State<RoomScreenMini>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    // الغينا كل الاشتراكات لتجنب تسريبات الذاكرة
 
     for (final sub in _subscriptions) {
       sub?.cancel();
@@ -54,7 +53,6 @@ class _RoomScreenMiniState extends State<RoomScreenMini>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // إصلاح الـ async/void bug بدون مشاكل
     if (state == AppLifecycleState.paused) {
       Future.delayed(const Duration(milliseconds: 100),
           () => debugPrint('Camera stopped'));
@@ -80,7 +78,10 @@ class _RoomScreenMiniState extends State<RoomScreenMini>
           SliverToBoxAdapter(
             child: BlocBuilder<RoomCubit, RoomState>(
               bloc: _roomCubit,
-              buildWhen: (prev, curr) => prev != curr,
+              buildWhen: (prev, curr) {
+                if (prev is! RoomLoaded || curr is! RoomLoaded) return true;
+                return prev.roomMode != curr.roomMode;
+              },
               builder: (context, state) {
                 if (state is RoomLoaded) {
                   return Container(
@@ -108,16 +109,23 @@ class _RoomScreenMiniState extends State<RoomScreenMini>
           ),
           BlocBuilder<RoomCubit, RoomState>(
             bloc: _roomCubit,
-            buildWhen: (prev, curr) => prev != curr,
+            buildWhen: (prev, curr) {
+              if (prev is! RoomLoaded || curr is! RoomLoaded) return true;
+              return prev.seatCount != curr.seatCount;
+            },
             builder: (context, state) {
-              if (state is RoomLoaded)
+              if (state is RoomLoaded) {
                 return SeatGrid(seatCount: state.seatCount);
+              }
               return const SliverToBoxAdapter(child: SizedBox(height: 50));
             },
           ),
           BlocBuilder<RoomCubit, RoomState>(
             bloc: _roomCubit,
-            buildWhen: (prev, curr) => prev != curr,
+            buildWhen: (prev, curr) {
+              if (prev is! RoomLoaded || curr is! RoomLoaded) return true;
+              return prev.messages != curr.messages;
+            },
             builder: (context, state) {
               if (state is RoomLoaded) {
                 return ChatList(

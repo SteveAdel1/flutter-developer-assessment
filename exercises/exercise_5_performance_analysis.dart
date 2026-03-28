@@ -291,7 +291,7 @@ class MainLayout extends StatelessWidget {
                   right: 0,
                   child: Container(
                     height: 80,
-                    color: Colors.amber.withOpacity(0.9),
+                    color: Colors.amber,
                     child: Center(child: Text('Gift Banner')),
                   ),
                 );
@@ -311,7 +311,7 @@ class MainLayout extends StatelessWidget {
                   right: 0,
                   child: Container(
                     height: 60,
-                    color: Colors.blue.withOpacity(0.9),
+                    color: Colors.blue,
                     child: Center(child: Text('Game Banner')),
                   ),
                 );
@@ -331,7 +331,7 @@ class MainLayout extends StatelessWidget {
                   right: 0,
                   child: Container(
                     height: 60,
-                    color: Colors.green.withOpacity(0.9),
+                    color: Colors.green,
                     child: Center(child: Text('Lucky Banner')),
                   ),
                 );
