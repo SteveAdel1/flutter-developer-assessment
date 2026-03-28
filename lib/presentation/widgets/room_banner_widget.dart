@@ -23,5 +23,4 @@ class RoomBanner extends StatelessWidget {
       ),
     );
   }
-
 }

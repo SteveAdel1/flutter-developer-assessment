@@ -1,4 +1,3 @@
-
 abstract class RoomState {}
 
 class RoomInitial extends RoomState {}

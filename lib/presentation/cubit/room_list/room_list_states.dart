@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../domain/entities/room_entity.dart';
 
-
 abstract class RoomListState {}
-
 
 class RoomListInitial extends RoomListState {}
 

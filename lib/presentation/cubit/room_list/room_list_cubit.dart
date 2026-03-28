@@ -25,9 +25,9 @@ class RoomListCubit extends Cubit<RoomListState> {
   void setupScrollListener({required BuildContext context}) {
     scrollController.addListener(() {
       // FIX Prevent loadMore if we reached lastPage
-     //لو currentPage وصلت لآخر صفحة، أي محاولة لتحميل صفحة جديدة هتسبب request فاضية أو error
+      //لو currentPage وصلت لآخر صفحة، أي محاولة لتحميل صفحة جديدة هتسبب request فاضية أو error
       if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent &&
+              scrollController.position.maxScrollExtent &&
           currentPage < lastPage) {
         loadMoreRooms(context: context);
       }
@@ -41,16 +41,14 @@ class RoomListCubit extends Cubit<RoomListState> {
     final result = await _fetchRoomsUC(RoomParams(page: currentPage));
 
     result.fold(
-          (error) => emit(RoomListError(NetworkExceptions.getErrorMessage(error))),
-          (response) {
+      (error) => emit(RoomListError(NetworkExceptions.getErrorMessage(error))),
+      (response) {
         // FIX  Clear old room and cast properly
-            //لما نعمل refresh للبيانات، كنا بنضيف الداتا الجديدة على القديمة بدون مسح القديم، وكنا ممكن نسيب النوع
-            rooms = (response.data ?? [])
-                .map((e) => e)
-                .toList();
+        //لما نعمل refresh للبيانات، كنا بنضيف الداتا الجديدة على القديمة بدون مسح القديم، وكنا ممكن نسيب النوع
+        rooms = (response.data ?? []).map((e) => e).toList();
 
         // FIX Set lastPage safely
-            // لو حاجة رجعت null فى الpagination info
+        // لو حاجة رجعت null فى الpagination info
         lastPage = response.paginates?.lastPage ?? currentPage;
 
         if (rooms.isEmpty) {
@@ -74,14 +72,14 @@ class RoomListCubit extends Cubit<RoomListState> {
     final result = await _fetchRoomsUC(RoomParams(page: currentPage));
 
     result.fold(
-          (error) {
+      (error) {
         // لا تمسح الـ room، فقط اعرض رسالة
         final message = NetworkExceptions.getErrorMessage(error);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(message)),
         );
       },
-          (response) {
+      (response) {
         final newRooms = response.data ?? [];
         rooms.addAll(newRooms);
         lastPage = response.paginates?.lastPage ?? lastPage;

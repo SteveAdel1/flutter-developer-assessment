@@ -7,7 +7,7 @@ class BuildOffline extends StatelessWidget {
   final RoomListCubit cubit;
   @override
   Widget build(BuildContext context) {
-    return  Center(
+    return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(

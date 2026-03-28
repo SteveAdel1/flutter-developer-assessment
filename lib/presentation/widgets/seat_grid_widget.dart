@@ -8,7 +8,7 @@ class SeatGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
-            (context, index) => Container(
+        (context, index) => Container(
           decoration: BoxDecoration(
             color: Colors.grey.shade200,
             borderRadius: BorderRadius.circular(8),

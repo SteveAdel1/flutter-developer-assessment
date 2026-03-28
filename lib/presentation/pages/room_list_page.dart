@@ -43,8 +43,15 @@ class _RoomListPageState extends State<RoomListPage> {
             return BuildShimmers();
           }
 
-          if (state is RoomListError) return BuildErrors(message: state.message, cubit: _cubit,);
-          if (state is RoomListOffline) return BuildOffline(cubit: _cubit,);
+          if (state is RoomListError)
+            return BuildErrors(
+              message: state.message,
+              cubit: _cubit,
+            );
+          if (state is RoomListOffline)
+            return BuildOffline(
+              cubit: _cubit,
+            );
           if (state is RoomListEmpty) {
             return const Center(child: Text('No room available'));
           }

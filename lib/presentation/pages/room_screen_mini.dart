@@ -9,17 +9,18 @@ import '../widgets/chat_list_widget.dart';
 import '../widgets/room_banner_widget.dart';
 import '../widgets/seat_grid_widget.dart';
 
-
 class RoomScreenMini extends StatefulWidget {
   final int roomId;
   final bool isLocked;
-  const RoomScreenMini({required this.roomId, this.isLocked = false, super.key});
+  const RoomScreenMini(
+      {required this.roomId, this.isLocked = false, super.key});
 
   @override
   State<RoomScreenMini> createState() => _RoomScreenMiniState();
 }
 
-class _RoomScreenMiniState extends State<RoomScreenMini> with WidgetsBindingObserver {
+class _RoomScreenMiniState extends State<RoomScreenMini>
+    with WidgetsBindingObserver {
   final RoomCubit _roomCubit = RoomCubit();
   final BannerCubit _bannerCubit = BannerCubit();
   final ScrollController _chatScrollController = ScrollController();
@@ -55,9 +56,11 @@ class _RoomScreenMiniState extends State<RoomScreenMini> with WidgetsBindingObse
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // إصلاح الـ async/void bug بدون مشاكل
     if (state == AppLifecycleState.paused) {
-      Future.delayed(const Duration(milliseconds: 100), () => debugPrint('Camera stopped'));
+      Future.delayed(const Duration(milliseconds: 100),
+          () => debugPrint('Camera stopped'));
     } else if (state == AppLifecycleState.resumed) {
-      Future.delayed(const Duration(milliseconds: 100), () => debugPrint('Camera resumed'));
+      Future.delayed(const Duration(milliseconds: 100),
+          () => debugPrint('Camera resumed'));
     }
   }
 
@@ -84,13 +87,17 @@ class _RoomScreenMiniState extends State<RoomScreenMini> with WidgetsBindingObse
                     height: 60,
                     margin: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [Colors.amber, Colors.orange]),
+                      gradient: const LinearGradient(
+                          colors: [Colors.amber, Colors.orange]),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
                       child: Text(
-                        state.roomMode == 'locked' ? 'Comments Locked' : 'Normal Mode',
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        state.roomMode == 'locked'
+                            ? 'Comments Locked'
+                            : 'Normal Mode',
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ),
                   );
@@ -103,7 +110,8 @@ class _RoomScreenMiniState extends State<RoomScreenMini> with WidgetsBindingObse
             bloc: _roomCubit,
             buildWhen: (prev, curr) => prev != curr,
             builder: (context, state) {
-              if (state is RoomLoaded) return SeatGrid(seatCount: state.seatCount);
+              if (state is RoomLoaded)
+                return SeatGrid(seatCount: state.seatCount);
               return const SliverToBoxAdapter(child: SizedBox(height: 50));
             },
           ),
@@ -112,7 +120,9 @@ class _RoomScreenMiniState extends State<RoomScreenMini> with WidgetsBindingObse
             buildWhen: (prev, curr) => prev != curr,
             builder: (context, state) {
               if (state is RoomLoaded) {
-                return ChatList(messages: state.messages, scrollController: _chatScrollController);
+                return ChatList(
+                    messages: state.messages,
+                    scrollController: _chatScrollController);
               }
               return const SliverToBoxAdapter(child: SizedBox.shrink());
             },

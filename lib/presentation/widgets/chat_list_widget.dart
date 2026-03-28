@@ -4,7 +4,8 @@ class ChatList extends StatelessWidget {
   final List<String> messages;
   final ScrollController scrollController;
 
-  const ChatList({required this.messages, required this.scrollController, super.key});
+  const ChatList(
+      {required this.messages, required this.scrollController, super.key});
 
   @override
   Widget build(BuildContext context) {
