@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "generated_at": "2026-03-28T17:56:55.762Z",
+    "assessment_version": "1.0",
+    "company": "UTD Software"
+  },
+  "about_you": {
+    "full_name": "Steve Adel Farouq",
+    "email": "steveadelfarouq@gmail.com",
+    "github_username": "SteveAdel1",
+    "flutter_experience": "2-3",
+    "total_dev_experience": "1-3"
+  },
+  "skills_self_assessment": {
+    "bloc_flutter_bloc": 4,
+    "clean_architecture": 4,
+    "firebase": 3,
+    "cicd_devops": 4,
+    "testing": 3,
+    "realtime_websocket": 3,
+    "performance_devtools": 1
+  },
+  "technical_knowledge": {
+    "q8_complex_feature": "One of the most complex features I built was a real-time room system similar to live streaming apps. It included dynamic seat management, live user interactions, and multiple real-time streams (messages, commands, and user join events) handled using BLoC and streams. I optimized performance by reducing unnecessary rebuilds using BlocSelector and buildWhen, and managed pagination with infinite scrolling. The system also handled edge cases like network failures, lifecycle changes, and maintaining UI state consistency. This feature required strong architecture design, efficient state management, and performance tuning.",
+    "q9_stateful_vs_bloc": "I use StatefulWidget for simple, local UI state (like toggles or animations).\nI use BLoC for complex logic, API calls, or shared state across screens.",
+    "q10_code_output": "4\ntrue\nlist2 references the same list as list1, so modifying list2 also affects list1 identical is true because both point to the same object",
+    "q11_bloc_bug": "state doesn’t update immediately after emit so the second emit(state + 1) still uses the old state\non<Increment>((event, emit) async {\n  await Future.delayed(Duration(seconds: 1));\n  emit(state + 2); \n});",
+    "q12_const_sizedbox": "SizedBox() : new instance every build.\nconst SizedBox():  reused instance, more efficient.",
+    "q13_friday_bug": "1. Assess severity and impact.\n2. Notify team and stakeholders.\n3. Reproduce and isolate the bug.\n4. Apply a minimal, tested fix.\n5. Deploy carefully and verify.\n6. Document root cause and preventive steps."
+  },
+  "how_you_work": {
+    "q14_architecture_disagreement": "I disagreed when the team wanted to use MVVM . I suggested clean architecture  instead, after a lengthy discussion, he managed to convince him to work with clean engineering for ease of testing and to separate the data source from the interfaces and domains.",
+    "q15_staying_current": "I stay updated by following **Flutter/Dart official blogs**, experimenting with new features in projects, and engaging with the **community** to learn best practices.",
+    "q16_code_review": "I review code for correctness, readability and consistency and performance and tests\na good PR is small and focused and well-documented and easy to understand",
+    "q17_ai_usage": "I used it to improve performance, complement work, and provide better solutions that help deliver better and more practical results."
+  },
+  "submissions": {
+    "q18_video_url": null,
+    "q19_github_repo_url": "https://github.com/SteveAdel1",
+    "q20_anything_else": null
+  }
+}

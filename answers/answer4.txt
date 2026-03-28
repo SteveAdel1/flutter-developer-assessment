@@ -1,0 +1,143 @@
+registerSingleton : بيعمل واحد بس لما بتطلبه instance
+registerLazySingleton : بيعمل instance ويجافظ عليه لحد ما تستخدمه
+registerFactory : بيعمل instanceجديد كل مرة بتطلبه
+
+----------------------------------------------------------------------------------
+ class DependencyInjectionService {
+   static Future<void> init() async {
+  Core Services
+     di.registerSingleton<DioFactory>(DioFactory());
+     di.registerSingleton<HiveManager>(HiveManager());
+
+ Core Services
+     di.registerLazySingleton<HomeRemoteDataSource>(() => HomeRemoteDataSource(di<DioFactory>()));
+     di.registerLazySingleton<MessagesRemoteDataSource>(() => MessagesRemoteDataSource(di<DioFactory>()));
+     di.registerLazySingleton<ProfileRemoteDataSource>(() => ProfileRemoteDataSource(di<DioFactory>()));
+     di.registerLazySingleton<PusherRemoteDataSource>(() => PusherRemoteDataSource(null));
+
+  Repositories
+ di.registerLazySingleton<HomeRepository>(() => HomeRepository(di<HomeRemoteDataSource>()));
+     di.registerLazySingleton<MessagesRepository>(() => MessagesRepository(di<MessagesRemoteDataSource>()));
+     di.registerLazySingleton<ProfileRepository>(() => ProfileRepository(di<ProfileRemoteDataSource>()));
+     di.registerLazySingleton<PusherRepository>(() => PusherRepository(di<PusherRemoteDataSource>()));
+
+      // Use Cases
+     di.registerLazySingleton(() => FetchRoomsUC(di()));
+     di.registerLazySingleton(() => FetchLiveRoomsUC(di()));
+     di.registerLazySingleton(() => CreateRoomUC(di()));
+     di.registerLazySingleton(() => FetchMessagesUC(di()));
+     di.registerLazySingleton(() => SendMessageUC(di()));
+     di.registerLazySingleton(() => DeleteMessageUC(di()));
+     di.registerLazySingleton(() => FetchUserProfileUC(di()));
+     di.registerLazySingleton(() => FetchMyProfileUC(di()));
+     di.registerLazySingleton(() => UpdateProfileUC(di()));
+     di.registerLazySingleton(() => FetchGiftHistoryUC(di()));
+     di.registerLazySingleton(() => FetchUserBadgesUC(di()));
+     di.registerLazySingleton(() => FetchMyBadgesUC(di()));
+     di.registerLazySingleton(() => FetchCpProfileUC(di()));
+     di.registerLazySingleton(() => FetchUserRoomsUC(di()));
+     di.registerLazySingleton(() => FetchSupporterUC(di()));
+     di.registerLazySingleton(() => FetchUserIntroUC(di()));
+     di.registerLazySingleton(() => FetchReelsUC(di()));
+     di.registerLazySingleton(() => LikeReelUC(di()));
+     di.registerLazySingleton(() => ShareReelUC(di()));
+     di.registerLazySingleton(() => ViewReelUC(di()));
+     di.registerLazySingleton(() => FetchMomentsUC(di()));
+     di.registerLazySingleton(() => InitPusherUC(di()));
+     di.registerLazySingleton(() => SubscribeChatUC(di()));
+     di.registerLazySingleton(() => SubscribeMessagesUC(di()));
+     di.registerLazySingleton(() => ListenToBannersUC(di()));
+     di.registerLazySingleton(() => ListenToGamesUC(di()));
+     di.registerLazySingleton(() => SubscribeCounterUC(di()));
+     di.registerLazySingleton(() => FetchConfigUC(di()));
+     di.registerLazySingleton(() => FetchCountriesUC(di()));
+     di.registerLazySingleton(() => UpdateFCMTokenUC(di()));
+     di.registerLazySingleton(() => FetchLevelDataUC(di()));
+     di.registerLazySingleton(() => InitAnalyticsUC(di()));
+     di.registerLazySingleton(() => FetchWalletUC(di()));
+
+     // BLoCs
+     di.registerLazySingleton(() => HomeBloc(di(), di()));
+     di.registerLazySingleton(() => CreateRoomBloc(di()));
+     di.registerLazySingleton(() => MessagesBloc(di(), di()));
+     di.registerLazySingleton(() => DeleteMessageBloc(di()));
+
+ Refactored FetchUserDataBloc split
+     di.registerFactory(() => GiftHistoryBloc(giftHistoryUseCase: di()));
+     di.registerFactory(() => GetBadgesBloc(getBadgesUseCase: di(), getMyAllBadgeUC: di()));
+     di.registerFactory(() => UserBadgesBloc(uc: di()));
+     di.registerFactory(() => GetUserBadgesBloc(uc: di()));
+     di.registerFactory(() => CpProfileBloc(uc: di()));
+     di.registerFactory(() => GetUserRoomsBloc(uc: di()));
+     di.registerFactory(() => GetSupporterBloc(uc: di()));
+     di.registerFactory(() => GetUserIntroBloc(uc: di()));
+     di.registerFactory(() => GetReelsBloc(di(), di(), di(), di()));
+     di.registerFactory(() => ReelViewerBloc(di()));
+     di.registerFactory(() => MomentBloc(di()));
+
+     // تقسيم FetchUserDataBloc إلى BLoCs أصغر
+     di.registerLazySingleton(() => UserProfileBloc(fetchMyProfileUC: di(), fetchUserProfileUC: di(), updateProfileUC: di()));
+     di.registerLazySingleton(() => PusherBloc(initPusherUC: di(), subscribeChatUC: di(), subscribeMessagesUC: di()));
+     di.registerLazySingleton(() => BannerBloc(listenToBannersUC: di(), listenToGamesUC: di()));
+     di.registerLazySingleton(() => CounterBloc(subscribeCounterUC: di()));
+     di.registerLazySingleton(() => ConfigBloc(fetchConfigUC: di(), fetchCountriesUC: di(), updateFCMTokenUC: di()));
+     di.registerLazySingleton(() => BadgesBloc(fetchUserBadgesUC: di(), fetchMyBadgesUC: di(), fetchLevelDataUC: di()));
+     di.registerLazySingleton(() => AnalyticsBloc(initAnalyticsUC: di()));
+     di.registerLazySingleton(() => WalletBloc(fetchWalletUC: di()));
+     di.registerLazySingleton(() => GiftHistoryFeatureBloc(fetchGiftHistoryUC: di()));
+     di.registerLazySingleton(() => UserRoomsBloc(fetchUserRoomsUC: di(), fetchSupporterUC: di()));
+     di.registerLazySingleton(() => CpProfileFeatureBloc(fetchCpProfileUC: di()));
+     di.registerLazySingleton(() => UserIntroFeatureBloc(fetchUserIntroUC: di()));
+   }
+}
+ استخدمنا lazySingleton للclass التي تتشارك state بين كذا شاشات
+ استخدمنا factory للclass التي شغاله فقط ضمن الشاشة ui مخصوصة بس
+-----------------------------------------------------------------------------------------------------------
+تقسيم ملف DI إلى وحدات modules
+ بدل ملف واحد ضخم (>2000 سطر)، نعمل ملفات لكل ميزة أو طبقة:
+ core_module.dart
+ تسجيل الخدمات الأساسية مثل DioFactory, HiveManager, SharedPreferences.
+ data_sources_module.dart
+ تسجيل جميع data sources مثل HomeRemoteDataSource, MessagesRemoteDataSource, ProfileRemoteDataSource.
+ repositories_module.dart
+ تسجيل جميع repositories لكل feature.
+ use_cases_module.dart
+ تسجيل جميع Use Cases لكل feature.
+ blocs_module.dart
+ تسجيل جميع BLoCs مع تحديد singleton أو factory لكل واحد.
+ feature_modules/
+ لكل ميزة رئيسية (مثل Rooms, Messages, Profile, Reels)، نسوي ملف DI خاص بها:
+ rooms_module.dart, messages_module.dart, profile_module.dart, reels_module.dart
+ main_di.dart
+ ملف رئيسي يجمع كل modules مع بعض ويعمل init().
+
+ 💡 فائدة: كل ميزة تتحمل lazy فقط عند استدعاء المستخدم لها، يقلل استهلاك الذاكرة ويحسن الأداء.
+
+                   ┌─────────────┐
+                    │  DioFactory │
+                    └─────┬──────┘
+                          │
+         ┌────────────────┼─────────────────┐
+         │                │                 │
+ ┌───────▼───────┐  ┌─────▼────────┐  ┌─────▼─────────┐
+ │ HomeDataSource│  │MessagesSource │  │ProfileSource  │
+ └───────┬───────┘  └─────┬────────┘  └─────┬─────────┘
+         │                │                 │
+         ▼                ▼                 ▼
+ ┌─────────────┐   ┌───────────────┐  ┌──────────────┐
+ │HomeRepo     │   │MessagesRepo    │  │ProfileRepo  │
+ └───────┬─────┘   └───────┬───────┘  └─────┬────────┘
+         │                 │                 │
+         ▼                 ▼                 ▼
+ ┌─────────────┐   ┌───────────────┐  ┌──────────────┐
+ │UseCases     │   │UseCases        │  │UseCases      │
+ └───────┬─────┘   └───────┬───────┘  └─────┬────────┘
+         │                 │                 │
+         ▼                 ▼                 ▼
+ ┌─────────────┐   ┌───────────────┐  ┌──────────────┐
+ │ BLoCs       │   │ BLoCs          │  │ BLoCs        │
+ │UserProfile  │   │MessagesBloc    │  │ProfileBloc   │
+ │PusherBloc   │   │                │  │              │
+ │...          │   │                │  │              │
+ └─────────────┘   └───────────────┘  └──────────────┘
+
